@@ -24,17 +24,30 @@ const search_results = (state = [], action) => {
     return state;
 };
 
-const favorites = (state = [], action) => {
-    return state;
+const favorites = (state=[], action) => {
+return state
 }
 
-const category = (state = [], action) => {
-    return state;
+const category = (state=[], action) => {
+return state
 }
 
-function* watcherSaga() {
-    yield takeEvery('GET_GIPHY', getGiphySearch)
+function* watcherSaga(){
+
+
+    yield takeEvery('POST_FAVORITES', postFavorites);
+
 }
+
+
+function* postFavorites(action){
+    console.log('posting favorite', action)
+    yield axios.post('/api/favorite', action.payload)
+    yield put({
+        type: 'GET_FAVORITES'
+    })
+}
+
 
 const sagaMiddleware = createSagaMiddleware();
 
