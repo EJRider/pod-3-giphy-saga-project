@@ -10,9 +10,9 @@ router.get('/', (req, res) => {
 
 // add a new favorite
 router.post('/', (req, res) => {
-  const sqlText = `INSERT INTO "favorite" ("url")
+  const sqlText = `INSERT INTO "favorites" ("link")
   VALUES ($1);`;
-  const sqlParams = [req.body];
+  const sqlParams = [req.body.link];
   pool.query(sqlText, sqlParams)
   .then(dbRes=>{
     console.log('sucess in postFavorite')

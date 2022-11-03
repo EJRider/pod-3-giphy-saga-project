@@ -33,8 +33,7 @@ return state
 }
 
 function* watcherSaga(){
-
-
+    yield takeEvery('GET_GIPHY', getGiphySearch);
     yield takeEvery('POST_FAVORITES', postFavorites);
 
 }
@@ -43,15 +42,12 @@ function* watcherSaga(){
 function* postFavorites(action){
     console.log('posting favorite', action)
     yield axios.post('/api/favorite', action.payload)
-    yield put({
-        type: 'GET_FAVORITES'
-    })
 }
 
 
 const sagaMiddleware = createSagaMiddleware();
 
-const storeInstace = createStore(
+const storeInstance = createStore(
     combineReducers({
         search_results,
         favorites,
@@ -62,4 +58,4 @@ const storeInstace = createStore(
 
 sagaMiddleware.run(watcherSaga);
 
-ReactDOM.render(<Provider store={storeInstace}><App /></Provider>, document.getElementById('root'));
+ReactDOM.render(<Provider store={storeInstance}><App /></Provider>, document.getElementById('root'));
