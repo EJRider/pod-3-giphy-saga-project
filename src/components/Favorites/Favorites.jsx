@@ -17,15 +17,15 @@ function Favorites(){
     }
 
     return(
-        <>
-            <ul> 
-                {favorites.map(fave => (
-                    <li>
-                        {fave}
-                    </li>
-                ))}
-            </ul>
-        </>
+        
+            <form> 
+                {favorites.map(gif => 
+                    <div>
+                        <img src={gif.link} />
+                    </div>
+                )}
+            </form>
+        
     );
 }
 
