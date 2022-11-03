@@ -9,31 +9,48 @@ import createSagaMiddleware from 'redux-saga'
 import {takeEvery, put} from 'redux-saga/effects'
 
 
-const search_results = (state, action) => {
+// const search_results = (state, action) => {
 
-};
+// };
 
-const favorites = (state, action) => {
+// const favorites = (state, action) => {
 
-}
+// }
 
-const category = (state, action) => {
-
+const category = (state = [], action) => {
+   switch (action.type) {
+        case "SET_CATEGORY":
+            return action.payload;
+        default:
+            return state;
+   }
 }
 
 function* watcherSaga(){
-
+    yield takeEvery("FETCH_CATEGORY", fetchCategory)
 }
 
-createSagaMiddleware(sagaMiddleware);
+function* fetchCategory() {
+    console.log('in fetchCategory');
+
+    let catRes = yield axios.get("/api/category");
+    console.log('GET response', catRes);
+
+    yield put({
+        type: "SET_CATEGORY",
+        payload: response.data
+    })
+}
+
+const sagaMiddleware = createSagaMiddleware();
 
 const storeInstace = createStore(
-    combineReducers({
-        search_results,
-        favorites,
-        category
-    },
-    applyMiddleware(sagaMiddleware, logger))
+    // combineReducers({
+    //     search_results,
+    //     favorites,
+        category,
+    // }),
+    applyMiddleware(sagaMiddleware, logger)
 )
 
 sagaMiddleware.run(watcherSaga);
