@@ -8,8 +8,12 @@ function Categories({ id }) {
     // console.log('categories', allCategories);
 
     const dropdownSelect = () => {
+        if(!category) {
+            alert('A category must be set to submit!')
+            return;
+        }
         dispatch({type:'PUT_FAVORITE', payload: {
-            category: e.target.value,
+            category: category,
             id: id
         }})
     }
@@ -17,8 +21,9 @@ function Categories({ id }) {
     return (
         <div>
             <select onChange={(e) => setCategory(e.target.value)}>
+                <option key={0} defaultValue={0} hidden>Select a Category</option>
                 {allCategories.map(category => 
-                    <option key={category.id} value={category.id}>{category.name}</option>    
+                    <option key={category.id} value={category.id} >{category.name}</option>    
                 )}
 
                 {/* <option value="select">Select One</option>

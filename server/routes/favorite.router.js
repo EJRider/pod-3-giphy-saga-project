@@ -5,7 +5,7 @@ const router = express.Router();
 
 // return all favorite images
 router.get('/', (req, res) => {
-  const sqlText = `SELECT * FROM "favorites";`
+  const sqlText = `SELECT * FROM "favorites" ORDER BY "catergory_id";`
   pool.query(sqlText)
       .then(dbRes => {
         res.send(dbRes.rows)

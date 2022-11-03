@@ -44,8 +44,11 @@ function* fetchFavorites(){
 }
 
 function* putFavorite(action) {
-    // console.log(action.payload);
-    yield axios.put(`api/favorite/${action.payload.id}`, action.payload)
+    console.log(action.payload);
+    yield axios.put(`api/favorite/${action.payload.id}`, action.payload);
+    yield put ({
+        type: 'GET_FAVORITES'
+    })
 }
 
 const favorites = (state =[], action) => {
@@ -90,7 +93,6 @@ const storeInstance = createStore(
         search_results,
         favorites,
         category
-
     }),
     applyMiddleware(sagaMiddleware, logger)
 )
