@@ -22,14 +22,14 @@ app.use(express.static('build'));
 app.use('/api/favorite', favoriteRouter);
 app.use('/api/category', categoryRouter);
 
-app.get('/getgif/:q', (req, res) => {
+app.get('/getgif/:q/:limit', (req, res) => {
   axios({
     method: 'GET',
     url: 'https://api.giphy.com/v1/gifs/search',
     params: {
       api_key: process.env.GIPHY_KEY,
       q: req.params.q,
-      limit: 10
+      limit: req.params.limit
     }
   })
     .then(apiRes => res.send(apiRes.data))

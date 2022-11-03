@@ -11,9 +11,10 @@ function App(props) {
       <h1>Giphy Search!</h1>
 
       <Router>
-        <Route path="/favorites"
+        <Route path="/favorites">
           <Favorites />
         </Route>
+        
         <Route path="/">
           <SearchForm />
         </Route>
