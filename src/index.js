@@ -10,11 +10,32 @@ import { takeEvery, put } from 'redux-saga/effects'
 
 function* getGiphySearch(action) {
     let res = yield axios.get(`/getgif/${action.payload}`);
-
     yield put({
         type: 'SET_GIPHY',
         payload: res.data
     })
+}
+
+function* fetchFavorites(){
+    yield axios.get('/api/favorite')
+
+    yield put ({
+        type: 'SAVE_FAVORITES'
+    })
+}
+
+const favorites = (state =[], action) => {
+    switch (action.type) {
+        case 'SAVE_ELEMENTS':
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
+const category = (state, action) => {
+    return state =[]
+
 }
 
 const search_results = (state = [], action) => {
@@ -24,21 +45,14 @@ const search_results = (state = [], action) => {
     return state;
 };
 
-const favorites = (state = [], action) => {
-    return state;
-}
-
-const category = (state = [], action) => {
-    return state;
-}
-
 function* watcherSaga() {
-    yield takeEvery('GET_GIPHY', getGiphySearch)
+    yield takeEvery('GET_GIPHY', getGiphySearch);
+    yield takeEvery('GET_FAVORITES', fetchFavorites);
 }
 
 const sagaMiddleware = createSagaMiddleware();
 
-const storeInstace = createStore(
+const storeInstance = createStore(
     combineReducers({
         search_results,
         favorites,
@@ -49,4 +63,4 @@ const storeInstace = createStore(
 
 sagaMiddleware.run(watcherSaga);
 
-ReactDOM.render(<Provider store={storeInstace}><App /></Provider>, document.getElementById('root'));
+ReactDOM.render(<Provider store={storeInstance}><App /></Provider>, document.getElementById('root'));
