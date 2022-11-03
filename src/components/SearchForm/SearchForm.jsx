@@ -17,8 +17,6 @@ function SearchForm() {
         dispatch({ type:'GET_GIPHY', payload: search })
     }
 
-
-
     return (
         <div id="searchForm">
             <form onSubmit={handleSubmit}>

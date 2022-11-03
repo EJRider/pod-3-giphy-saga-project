@@ -23,7 +23,6 @@ app.use('/api/favorite', favoriteRouter);
 app.use('/api/category', categoryRouter);
 
 app.get('/getgif/:q', (req, res) => {
-  console.log('in giphy_get server', req.body);
   axios({
     method: 'GET',
     url: 'https://api.giphy.com/v1/gifs/search',

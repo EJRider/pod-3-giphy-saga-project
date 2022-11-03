@@ -9,10 +9,7 @@ import createSagaMiddleware from 'redux-saga'
 import { takeEvery, put } from 'redux-saga/effects'
 
 function* getGiphySearch(action) {
-    console.log('in GiphySearch', action.payload);
     let res = yield axios.get(`/getgif/${action.payload}`);
-
-    console.log(res);
 
     yield put({
         type: 'SET_GIPHY',
