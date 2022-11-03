@@ -26,7 +26,7 @@ function* fetchFavorites(){
 
 const favorites = (state =[], action) => {
     switch (action.type) {
-        case 'SAVE_ELEMENTS':
+        case 'SAVE_FAVORITES':
             return action.payload;
         default:
             return state;
@@ -45,10 +45,19 @@ const search_results = (state = [], action) => {
     return state;
 };
 
+
 function* watcherSaga() {
     yield takeEvery('GET_GIPHY', getGiphySearch);
     yield takeEvery('GET_FAVORITES', fetchFavorites);
+    yield takeEvery('POST_FAVORITES', postFavorites);
 }
+
+
+function* postFavorites(action){
+    console.log('posting favorite', action)
+    yield axios.post('/api/favorite', action.payload)
+}
+
 
 const sagaMiddleware = createSagaMiddleware();
 
