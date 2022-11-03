@@ -16,6 +16,27 @@ function* getGiphySearch(action) {
     })
 }
 
+
+const category = (state = [], action) => {
+   switch (action.type) {
+        case "SET_CATEGORY":
+            return action.payload;
+        default:
+            return state;
+   }
+}
+
+function* fetchCategory() {
+    console.log('in fetchCategory');
+
+    let catRes = yield axios.get("/api/category");
+    console.log('GET response', catRes);
+
+    yield put({
+        type: "SET_CATEGORY",
+        payload: catRes.data
+    })
+}
 function* fetchFavorites(){
     yield axios.get('/api/favorite')
 
@@ -33,11 +54,6 @@ const favorites = (state =[], action) => {
     }
 }
 
-const category = (state, action) => {
-    return state =[]
-
-}
-
 const search_results = (state = [], action) => {
     if (action.type === 'SET_GIPHY') {
         return action.payload;
@@ -50,6 +66,7 @@ function* watcherSaga() {
     yield takeEvery('GET_GIPHY', getGiphySearch);
     yield takeEvery('GET_FAVORITES', fetchFavorites);
     yield takeEvery('POST_FAVORITES', postFavorites);
+    yield takeEvery("FETCH_CATEGORY", fetchCategory)
 }
 
 
@@ -66,6 +83,7 @@ const storeInstance = createStore(
         search_results,
         favorites,
         category
+
     }),
     applyMiddleware(sagaMiddleware, logger)
 )
