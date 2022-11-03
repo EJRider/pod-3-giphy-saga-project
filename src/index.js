@@ -10,32 +10,48 @@ import {takeEvery, put} from 'redux-saga/effects'
 
 
 const search_results = (state, action) => {
-
+    return state =[]
 };
 
-const favorites = (state, action) => {
-
+const favorites = (state =['boobpal;dksdjf', 'teeest'], action) => {
+    switch (action.type) {
+        case 'SAVE_ELEMENTS':
+            return action.payload;
+        default:
+            return state;
+    }
 }
 
 const category = (state, action) => {
+    return state =[]
+
+}
+
+function* fetchFavorites(){
+    yield axios.get('/api/favorite')
+
+    yield put ({
+        type: 'SAVE_FAVORITES'
+    })
 
 }
 
 function* watcherSaga(){
-
+    yield takeEvery('GET_FAVORITES', fetchFavorites)
 }
 
-createSagaMiddleware(sagaMiddleware);
+const sagaMiddleware = createSagaMiddleware();
+// createSagaMiddleware(sagaMiddleware);
 
-const storeInstace = createStore(
+const storeInstance = createStore(
     combineReducers({
         search_results,
         favorites,
         category
-    },
-    applyMiddleware(sagaMiddleware, logger))
+    }),
+    applyMiddleware(sagaMiddleware, logger)
 )
 
 sagaMiddleware.run(watcherSaga);
 
-ReactDOM.render(<Provider store={storeInstace}><App /></Provider>, document.getElementById('root'));
+ReactDOM.render(<Provider store={storeInstance}><App /></Provider>, document.getElementById('root'));
