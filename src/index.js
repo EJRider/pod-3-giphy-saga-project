@@ -17,10 +17,11 @@ function* getGiphySearch(action) {
 }
 
 function* fetchFavorites(){
-    yield axios.get('/api/favorite')
+    let response = yield axios.get('/api/favorite');
 
     yield put ({
-        type: 'SAVE_FAVORITES'
+        type: 'SAVE_FAVORITES',
+        payload: response.data
     })
 }
 
@@ -28,6 +29,7 @@ const favorites = (state =[], action) => {
     switch (action.type) {
         case 'SAVE_FAVORITES':
             return action.payload;
+        
         default:
             return state;
     }
@@ -56,6 +58,10 @@ function* watcherSaga() {
 function* postFavorites(action){
     console.log('posting favorite', action)
     yield axios.post('/api/favorite', action.payload)
+
+    yield put({
+        type: 'GET_FAVORITES'
+    })
 }
 
 
