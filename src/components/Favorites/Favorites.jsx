@@ -21,14 +21,7 @@ function Favorites(){
             <form> 
                 {favorites.map(gif => 
                     <div>
-                        <img src={gif.images.downsized.url} />
-                        <label for="categories">Choose a category:</label>
-                        <input list="categories" name="categories" id="categories" />
-                            <datalist id="categories">
-                                <option value="funny"/>
-                                <option value="nsfw"/>
-                            </datalist>
-                        <input type="submit" />
+                        <img src={gif.link} />
                     </div>
                 )}
             </form>
