@@ -6,7 +6,7 @@ function Favorites(){
     const dispatch  = useDispatch();
     const favorites = useSelector(store => store.favorites);
 
-    useEffect(() => {
+    useEffect(() => { 
         fetchFavorites();
     }, []);
 
