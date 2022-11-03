@@ -38,7 +38,7 @@ function* fetchCategory() {
 
     yield put({
         type: "SET_CATEGORY",
-        payload: response.data
+        payload: catRes.data
     })
 }
 
