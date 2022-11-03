@@ -1,5 +1,6 @@
 import {useEffect} from 'react';
 import { useDispatch, useSelector} from 'react-redux';
+import Categories from '../App/Categories/Categories';
 
 
 function Favorites(){
@@ -8,6 +9,7 @@ function Favorites(){
 
     useEffect(() => { 
         fetchFavorites();
+        fetchCategories();
     }, []);
 
     const fetchFavorites = () => {
@@ -16,16 +18,21 @@ function Favorites(){
         })
     }
 
+    const fetchCategories = () => {
+        dispatch({ 
+            type: "FETCH_CATEGORY" 
+        });
+    }
+
     return(
-        
             <form> 
                 {favorites.map(gif => 
-                    <div>
+                    <div key={gif.id}>
                         <img src={gif.link} />
+                        <Categories id={gif.id}/>
                     </div>
                 )}
             </form>
-        
     );
 }
 

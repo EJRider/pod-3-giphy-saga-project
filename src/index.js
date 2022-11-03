@@ -27,11 +27,9 @@ const category = (state = [], action) => {
 }
 
 function* fetchCategory() {
-    console.log('in fetchCategory');
-
+    // console.log('in fetchCategory');
     let catRes = yield axios.get("/api/category");
-    console.log('GET response', catRes);
-
+    // console.log('GET response', catRes);
     yield put({
         type: "SET_CATEGORY",
         payload: catRes.data
@@ -39,18 +37,21 @@ function* fetchCategory() {
 }
 function* fetchFavorites(){
     let response = yield axios.get('/api/favorite');
-
     yield put ({
         type: 'SAVE_FAVORITES',
         payload: response.data
     })
 }
 
+function* putFavorite(action) {
+    // console.log(action.payload);
+    yield axios.put(`api/favorite/${action.payload.id}`, action.payload)
+}
+
 const favorites = (state =[], action) => {
     switch (action.type) {
         case 'SAVE_FAVORITES':
             return action.payload;
-        
         default:
             return state;
     }
@@ -68,14 +69,14 @@ function* watcherSaga() {
     yield takeEvery('GET_GIPHY', getGiphySearch);
     yield takeEvery('GET_FAVORITES', fetchFavorites);
     yield takeEvery('POST_FAVORITES', postFavorites);
-    yield takeEvery("FETCH_CATEGORY", fetchCategory)
+    yield takeEvery("FETCH_CATEGORY", fetchCategory);
+    yield takeEvery('PUT_FAVORITE', putFavorite);
 }
 
 
 function* postFavorites(action){
-    console.log('posting favorite', action)
+    // console.log('posting favorite', action)
     yield axios.post('/api/favorite', action.payload)
-
     yield put({
         type: 'GET_FAVORITES'
     })
