@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { useSelector } from 'react-redux';
-
+import { useSelector, useDispatch } from 'react-redux';
 
 function SearchList() {
+
+    const dispatch = useDispatch();
+
     useEffect(() => {
 
     }, [])
@@ -14,7 +16,9 @@ function SearchList() {
             {searchList && searchList.map(gif =>
                 <div>
                     <img src={gif.images.downsized.url} />
-                    <button>FAVORITE</button>
+                    <button onClick={()=>{dispatch({type: 'POST_FAVORITES', payload: {
+                        link: gif.images.downsized.url
+                    }})}}>FAVORITE</button>
                 </div>
             )}
         </div>
