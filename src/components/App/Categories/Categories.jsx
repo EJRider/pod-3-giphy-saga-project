@@ -11,9 +11,11 @@ function Categories() {
         dispatch({ 
             type: "FETCH_CATEGORY" 
         });
-    })
+    }, [])
 
-    
+    if(!allCategories) {
+        <h1>loading</h1>
+    }
     return (
         <div>
             <select>

@@ -45,11 +45,11 @@ function* fetchCategory() {
 const sagaMiddleware = createSagaMiddleware();
 
 const storeInstance = createStore(
-    // combineReducers({
+    combineReducers({
     //     search_results,
     //     favorites,
         category,
-    // }),
+    }),
     applyMiddleware(sagaMiddleware, logger)
 )
 
