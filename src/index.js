@@ -44,7 +44,7 @@ function* fetchCategory() {
 
 const sagaMiddleware = createSagaMiddleware();
 
-const storeInstace = createStore(
+const storeInstance = createStore(
     // combineReducers({
     //     search_results,
     //     favorites,
@@ -55,4 +55,4 @@ const storeInstace = createStore(
 
 sagaMiddleware.run(watcherSaga);
 
-ReactDOM.render(<Provider store={storeInstace}><App /></Provider>, document.getElementById('root'));
+ReactDOM.render(<Provider store={storeInstance}><App /></Provider>, document.getElementById('root'));
