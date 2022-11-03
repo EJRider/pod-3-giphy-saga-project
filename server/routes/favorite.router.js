@@ -10,7 +10,18 @@ router.get('/', (req, res) => {
 
 // add a new favorite
 router.post('/', (req, res) => {
-  res.sendStatus(200);
+  const sqlText = `INSERT INTO "favorites" ("link")
+  VALUES ($1);`;
+  const sqlParams = [req.body.link];
+  pool.query(sqlText, sqlParams)
+  .then(dbRes=>{
+    console.log('sucess in postFavorite')
+    res.sendStatus(200);
+  })
+  .catch(dbErr=>{
+    console.error('error in postFavorite server', dbErr);
+    res.sendStatus(500);
+  })
 });
 
 // update given favorite with a category id
