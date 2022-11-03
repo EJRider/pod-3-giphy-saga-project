@@ -26,7 +26,7 @@ function* fetchFavorites(){
 
 const favorites = (state =[], action) => {
     switch (action.type) {
-        case 'SAVE_ELEMENTS':
+        case 'SAVE_FAVORITES':
             return action.payload;
         default:
             return state;

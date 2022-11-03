@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Favorites from '../Favorites/Favorites.jsx';
+import Favorites from '../Favorites/Favorites';
 import { HashRouter as Router, Route, Link } from 'react-router-dom';
 import SearchForm from '../SearchForm/SearchForm';
 
@@ -11,10 +11,12 @@ function App(props) {
       <h1>Giphy Search!</h1>
 
       <Router>
-        <Route path="/favorites"
+
+        <Route path="/favorites" exact>
           <Favorites />
         </Route>
-        <Route path="/">
+
+        <Route path="/" exact>
           <SearchForm />
         </Route>
         
