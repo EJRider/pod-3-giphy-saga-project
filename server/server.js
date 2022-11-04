@@ -22,6 +22,7 @@ app.use(express.static('build'));
 app.use('/api/favorite', favoriteRouter);
 app.use('/api/category', categoryRouter);
 
+// GIPHY GET endpoint for server. Uses url :q param for search
 app.get('/getgif/:q', (req, res) => {
   axios({
     method: 'GET',

@@ -7,18 +7,23 @@ function SearchForm() {
     const [search, setSearch] = useState('');
 
     const handleSubmit = (e) => {
+        // no refresh pls
         e.preventDefault();
 
+        // if search textbox is EMPTY, why empty? try again
         if(!search) {
             alert('Search box must be filled!')
             return;
         }
 
+        // tell Sagas to do its job and get a list of gifs from GIPHY
+        // using the search parameter
         dispatch({ type:'GET_GIPHY', payload: search })
     }
 
     return (
         <div id="searchForm">
+            {/* Search form */}
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
