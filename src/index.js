@@ -9,6 +9,8 @@ import createSagaMiddleware from 'redux-saga'
 import { takeEvery, put } from 'redux-saga/effects'
 
 function* getGiphySearch(action) {
+    // get gifs from GIPHY with params. GET doesn't have req.body,
+    // so must pass parameter through url
     let res = yield axios.get(`/getgif/${action.payload}`);
     yield put({
         type: 'SET_GIPHY',
@@ -36,6 +38,7 @@ function* fetchCategory() {
     })
 }
 function* fetchFavorites(){
+    // get favorites from DB
     let response = yield axios.get('/api/favorite');
     yield put ({
         type: 'SAVE_FAVORITES',
@@ -45,6 +48,7 @@ function* fetchFavorites(){
 
 function* putFavorite(action) {
     console.log(action.payload);
+    // ... /api/favorite/favId, with category.id to update the table
     yield axios.put(`api/favorite/${action.payload.id}`, action.payload);
     yield put ({
         type: 'GET_FAVORITES'
@@ -69,10 +73,19 @@ const search_results = (state = [], action) => {
 
 
 function* watcherSaga() {
+    // get gifs from GIPHY
     yield takeEvery('GET_GIPHY', getGiphySearch);
+
+    // get favorites from DB
     yield takeEvery('GET_FAVORITES', fetchFavorites);
+
+    // add a new favorite to DB
     yield takeEvery('POST_FAVORITES', postFavorites);
+
+    // get categories from DB
     yield takeEvery("FETCH_CATEGORY", fetchCategory);
+
+    // update favorites category
     yield takeEvery('PUT_FAVORITE', putFavorite);
 }
 
